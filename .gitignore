@@ -1,0 +1,15 @@
+# LLVM IR Debug Files
+*.ll
+
+# SFML Binaries
+libsfml/
+
+# Build Makefile
+Makefile
+
+# Rave's std & rt folders
+std/
+rt/
+
+# Test files
+rgstest*
