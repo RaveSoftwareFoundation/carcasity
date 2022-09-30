@@ -1,0 +1,69 @@
+namespace libc {
+    // Functions that are practically unnecessary in normal use and come from libc
+    extern(linkname: "strlen") int strlen(char* cstr);
+    char* btos(bool b) {
+        char* toret = "true";
+        if(b == false) toret = "false";
+    } => toret;
+}
+
+namespace std {
+    struct string {
+        char* ptr;
+        int len;
+
+        std::string* this(char* a) {
+            this.len = libc::strlen(a);
+            this.ptr = std::malloc(this.len+1);
+
+            int i = 0;
+            while(i<this.len) {
+                this.ptr[i] = a[i];
+                i += 1;
+            }
+            this.ptr[i] = '\0';
+        } => this;
+
+        bool isDeleted => (this.ptr == null);
+        char toChar => this.ptr[0];
+
+        bool has(char c) {
+            bool _has = false;
+
+            int i = 0;
+            while(i<this.len) {
+                if(this.ptr[i] == c) {
+                    _has = true;
+                    i = this.len;
+                }
+                i += 1;
+            }
+        } => _has;
+
+        void replace(char c, char to) {
+            int i = 0;
+            while(i<this.len) {
+                if(this.ptr[i] == c) {
+                    this.ptr[i] = to;
+                }
+                i += 1;
+            }
+        }
+
+        void destroy {
+            std::free(this.ptr);
+            if(this.ptr != null) this.ptr = null;
+        }
+
+        void set(char* a) {
+            this.destroy();
+            this = std::string(a);
+        }
+    }
+}
+
+//preoperator char* S(cstr) => std::string(cstr);
+
+macro S {
+    return std::string(#0);
+}

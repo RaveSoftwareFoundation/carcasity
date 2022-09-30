@@ -1,0 +1,56 @@
+import <std/string>
+
+namespace std {
+    namespace file {
+        struct File {
+            int flags;
+            char* rpos;
+            char* rend;
+            int(void*) close;
+            char* wend;
+            char* wpos;
+            char* mustbezero_1;
+            char* wbase;
+            int(void*,char*,int) read;
+            int(void*,char*,int) write;
+            int(void*,int,int) seek;
+            char* buff;
+            int buffSize;
+            void* prev;
+            void* next;
+            int fd;
+            int pipePid;
+            long lockCount;
+            int mode;
+            int lock;
+            int lbf;
+            void* cookie;
+            int off;
+            char* readSBuff;
+            void* mustbezero_2;
+            char* shend;
+            int shlim;
+            int shcnt;
+            void* prevLocked;
+            void* nextLocked;
+            void* locale;
+        }
+        extern(linkname: "fopen") std::file::File* open(char* path, char* mode);
+        extern(linkname: "fclose") int close(std::file::File* file);
+        extern(linkname: "ferror") int hasError(std::file::File* file);
+        extern(linkname: "fprintf") int printf(std::file::File* file, char* str, ...);
+        extern(linkname: "fflush") int flush(std::file::File* file);
+        extern(linkname: "fscanf") int scanf(std::file::File* file, char* fmt, ...);
+    }
+
+    extern(linkname: "printf") int printf(char* str, ...);
+    (vararg) int print(std::string* str) {
+		int toret = std::printf("%s",str.ptr);
+    } => toret;
+    (vararg) int println(std::string* str) {
+    	int toret = std::printf("%s\n",str.ptr);
+    } => toret;
+    extern(linkname: "scanf") int scanf(char* fmt, ...);
+    extern(linkname: "putchar") int putchar(char c);
+    extern(linkname: "puts") int puts(char* s);
+}
