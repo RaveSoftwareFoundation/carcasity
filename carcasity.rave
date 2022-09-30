@@ -1,5 +1,5 @@
 import <std/library>
-import <std/xio> // CHANGE TO <std/io> IF LLVM10
+import <std/io>
 
 namespace EventTypeSf {
     alias sfEvtClosed = 0;
